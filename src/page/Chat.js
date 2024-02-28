@@ -11,6 +11,7 @@ export default function Chat(){
     const { sendMessage, messageData, setMessageData } = useContext(MessageContext);
 
     const inputRef = useRef(null);
+    const messagesEndRef = useRef(null);
 
     const inputInit = () => {
         inputRef.current.value = "";
@@ -46,6 +47,7 @@ export default function Chat(){
             eventSource.addEventListener("message", (e) => {
                 let parseData = JSON.parse(e.data);                
                 setMessageData([...messageData, parseData]);
+                scrollToBottom();
             });
 
             eventSource.addEventListener("error", (error) => {
@@ -64,6 +66,10 @@ export default function Chat(){
         };
     }, [messageData, setMessageData])
 
+    const scrollToBottom = () => {
+        messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+
     return(
         <>            
             <MessageBox/>
@@ -72,6 +78,7 @@ export default function Chat(){
                 <input type="text" name="message" className="msger-input" placeholder="Enter your message..." ref={ inputRef }/>
                 <input type="submit" className="msger-send-btn" value="Send" />
             </form>
+            <div ref={messagesEndRef}></div>
         </>
     )
 }
