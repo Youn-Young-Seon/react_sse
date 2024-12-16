@@ -18,10 +18,10 @@ const MessageBox = () => {
     return(        
         messageData.map((messageInfo, i) => {
             console.log(messageInfo);
-            if (messageInfo.id === id){
-                return <p className="send" key={i}>{ messageInfo.message }</p>
+            if (messageInfo[1].data.id === id){
+                return <p className="send" key={i}>{ messageInfo[1].data.message }</p>
             } else {
-                return <p className="receive" key={i}>{ messageInfo.message }</p>
+                return <p className="receive" key={i}>{ messageInfo[1].data.message }</p>
             }
         })
     )
